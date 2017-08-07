@@ -16,6 +16,7 @@ RUN     apt-get update \
                 python-sqlalchemy \
                 python-tempita \
                 python-twisted \
+                python-virtualenv \
                 python2.7 \
                 python3 \
                 python3-future \
@@ -24,6 +25,7 @@ RUN     apt-get update \
                 python3-sqlalchemy \
                 python3-tempita \
                 python3-twisted \
+                python3-virtualenv \
                 runit \
                 subversion \
             && apt-get install -y --no-install-recommends \
