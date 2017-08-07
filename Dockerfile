@@ -24,6 +24,7 @@ RUN     apt-get update \
                 python3-sqlalchemy \
                 python3-tempita \
                 python3-twisted \
+                runit \
                 subversion \
             && apt-get install -y --no-install-recommends \
                 python-pip \
