@@ -57,11 +57,13 @@ RUN     virtualenv -p python2.7 --system-site-packages ~/venv/py2 \
 RUN     ~/venv/py2/bin/pip install 'buildbot[bundle]' buildbot-worker \
         && ~/venv/py3/bin/pip install 'buildbot[bundle]' buildbot-worker
 
-COPY    buildbot /home/buildbot/buildbot
+RUN     ~/venv/py2/bin/buildbot create-master ~/buildbot-py2 \
+        && ~/venv/py3/bin/buildbot create-master ~/buildbot-py3
 
-RUN     mkdir ~/buildbot-py2 ~/buildbot-py3 \
-        && ln -s ~/buildbot/master.cfg ~/buildbot-py2/master.cfg \
+RUN     ln -s ~/buildbot/master.cfg ~/buildbot-py2/master.cfg \
         && ln -s ~/buildbot/master.cfg ~/buildbot-py3/master.cfg
+
+COPY    buildbot /home/buildbot/buildbot
 
 
 USER    root
