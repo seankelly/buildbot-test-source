@@ -10,6 +10,7 @@ RUN     apt-get update \
                 git \
                 gnupg2 \
                 mercurial \
+                procps \
                 python-future \
                 python-markupsafe \
                 python-migrate \
