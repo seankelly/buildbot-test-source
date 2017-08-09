@@ -84,6 +84,8 @@ COPY    buildbot /home/buildbot/buildbot
 
 USER    root
 
-COPY    service /service
+ENV     PY2_WWW_PORT=8010 PY2_PB_PORT=9989
+ENV     PY3_WWW_PORT=8011 PY3_PB_PORT=9990
+EXPOSE  8010 8011
 
 CMD     ["runsvdir", "/service"]
