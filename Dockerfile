@@ -63,6 +63,22 @@ RUN     ~/venv/py2/bin/buildbot create-master ~/buildbot-py2 \
 RUN     ln -s ~/buildbot/master.cfg ~/buildbot-py2/master.cfg \
         && ln -s ~/buildbot/master.cfg ~/buildbot-py3/master.cfg
 
+# Do the Python 2 workers first.
+COPY    buildbot/worker.tac /home/buildbot/worker/py2-add/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-clean/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-clobber/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-copy/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-fresh/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py2-incremental/buildbot.tac
+
+# Python 3 workers second.
+COPY    buildbot/worker.tac /home/buildbot/worker/py3-add/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-clean/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-clobber/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-copy/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-fresh/buildbot.tac
+COPY    buildbot/worker.tac /home/buildbot/worker/py3-incremental/buildbot.tac
+
 COPY    buildbot /home/buildbot/buildbot
 
 
