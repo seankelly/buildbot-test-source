@@ -63,6 +63,8 @@ RUN     ~/venv/py2/bin/buildbot create-master ~/buildbot-py2 \
 RUN     ln -s ~/buildbot/master.cfg ~/buildbot-py2/master.cfg \
         && ln -s ~/buildbot/master.cfg ~/buildbot-py3/master.cfg
 
+# The COPYs are done as root, but switch to root for the RUN after.
+USER    root
 # Do the Python 2 workers first.
 COPY    buildbot/worker.tac /home/buildbot/worker/py2-add/buildbot.tac
 COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-clean/buildbot.tac
@@ -79,14 +81,16 @@ COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-copy/buildbot.tac
 COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-fresh/buildbot.tac
 COPY    buildbot/worker.tac /home/buildbot/worker/py3-incremental/buildbot.tac
 
-COPY    buildbot /home/buildbot/buildbot
+COPY    buildbot/master.cfg /home/buildbot/buildbot/master.cfg
+
+RUN     chown -R buildbot:buildbot ~buildbot/buildbot ~buildbot/worker
 
 
 USER    root
 
 COPY    service /var/lib/service
 
-RUN     mkdir -p /service/buildbot/py2 /service/buildbot/py3 /service/worker \
+RUN     mkdir -p /service/buildbot/py2 /service/buildbot/py3 \
         && ln -s /var/lib/service/buildbot/run /service/buildbot/py2/run \
         && ln -s /var/lib/service/buildbot/run /service/buildbot/py3/run
 
