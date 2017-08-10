@@ -54,8 +54,8 @@ USER    buildbot
 RUN     virtualenv -p python2.7 --system-site-packages ~/venv/py2 \
         && virtualenv -p python3.5 --system-site-packages ~/venv/py3
 
-RUN     ~/venv/py2/bin/pip install 'buildbot[bundle]' buildbot-worker \
-        && ~/venv/py3/bin/pip install 'buildbot[bundle]' buildbot-worker
+RUN     ~/venv/py2/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker \
+        && ~/venv/py3/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker
 
 RUN     ~/venv/py2/bin/buildbot create-master ~/buildbot-py2 \
         && ~/venv/py3/bin/buildbot create-master ~/buildbot-py3
