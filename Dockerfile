@@ -46,8 +46,8 @@ RUN     apt-get update \
                 helix-cli \
             && rm -rf /var/lib/apt/lists/*
 
-
 RUN     useradd -m buildbot
+
 
 USER    buildbot
 
@@ -83,6 +83,12 @@ COPY    buildbot /home/buildbot/buildbot
 
 
 USER    root
+
+COPY    service /var/lib/service
+
+RUN     mkdir -p /service/buildbot/py2 /service/buildbot/py3 /service/worker \
+        && ln -s /var/lib/service/buildbot/run /service/buildbot/py2/run \
+        && ln -s /var/lib/service/buildbot/run /service/buildbot/py3/run
 
 ENV     PY2_WWW_PORT=8010 PY2_PB_PORT=9989
 ENV     PY3_WWW_PORT=8011 PY3_PB_PORT=9990

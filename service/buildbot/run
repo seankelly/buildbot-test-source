@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cwd=$(pwd)
+name=$(echo "$cwd"| cut -d/ -f3-4 --output-delimiter=-)
+py=$(echo "$cwd"| cut -d/ -f4)
+venv=/home/buildbot/venv/$py
+basedir=/home/buildbot/$name
+
+cd "$basedir"
+exec chpst -u buildbot $venv/bin/buildbot start
