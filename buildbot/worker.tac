@@ -1,11 +1,20 @@
 import os
 
+import six
+
 from buildbot_worker.bot import Worker
 from twisted.application import service
 
-basedir = 'BASEDIR'
+if six.PY2:
+    PB_PORT = os.environ['PY2_PB_PORT']
+elif six.PY3:
+    PB_PORT = os.environ['PY3_PB_PORT']
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 rotateLength = 10000000
 maxRotatedFiles = 1
+
+name = '-'.join(basedir.split('/')[3:5])
 
 # note: this line is matched against to check that this is a worker
 # directory; do not edit it.
@@ -19,8 +28,8 @@ logfile = LogFile.fromFullPath(
 application.setComponent(ILogObserver, FileLogObserver(logfile).emit)
 
 buildmaster_host = '127.0.0.1'
-port = PORT
-workername = 'NAME'
+port = PB_PORT
+workername = name
 passwd = 'pass'
 keepalive = 600
 umask = None
