@@ -14,7 +14,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 rotateLength = 10000000
 maxRotatedFiles = 1
 
-name = '-'.join(basedir.split('/')[3:5])
+basename = os.path.split(basedir)[1]
+name = 'source-' + basename[4-]
 
 # note: this line is matched against to check that this is a worker
 # directory; do not edit it.

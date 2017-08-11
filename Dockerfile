@@ -87,14 +87,14 @@ RUN     chown -R buildbot:buildbot ~buildbot/buildbot ~buildbot/worker
 
 COPY    service /var/lib/service
 
-RUN     mkdir -p /service/buildbot/py2 /service/buildbot/py3 \
-        && ln -s /var/lib/service/buildbot/run /service/buildbot/py2/run \
-        && ln -s /var/lib/service/buildbot/run /service/buildbot/py3/run
+RUN     mkdir -p /service/buildbot-py2 /service/buildbot-py3 \
+        && ln -s /var/lib/service/buildbot/run /service/buildbot-py2/run \
+        && ln -s /var/lib/service/buildbot/run /service/buildbot-py3/run
 
 RUN     for pyver in py2 py3; do \
             for worker in add full-clean full-clobber full-copy full-fresh incremental; do \
-                mkdir -p /service/worker/$pyver/$worker \
-                && ln -s /var/lib/service/worker/run /service/worker/$pyver/$worker/run; \
+                mkdir -p /service/worker-$pyver-$worker \
+                && ln -s /var/lib/service/worker/run /service/worker-$pyver-$worker/run; \
             done; \
         done
 
