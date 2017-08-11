@@ -9,7 +9,7 @@ maxRotatedFiles = 10
 configfile = 'master.cfg'
 
 # Default umask for server
-umask = 022
+umask = 0o022
 
 # note: this line is matched against to check that this is a buildmaster
 # directory; do not edit it.
