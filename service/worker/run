@@ -2,7 +2,7 @@
 
 cwd=$(pwd)
 name=$(basename "$cwd" | cut -d- -f 2-)
-py=$(echo "$name" | cut -d- -f2)
+py=$(echo "$name" | cut -d- -f1)
 venv=/home/buildbot/venv/$py
 basedir=/home/buildbot/worker/$name
 
