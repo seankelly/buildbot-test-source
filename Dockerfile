@@ -63,28 +63,18 @@ RUN     ~/venv/py2/bin/buildbot create-master ~/buildbot-py2 \
 RUN     ln -s ~/buildbot/master.cfg ~/buildbot-py2/master.cfg \
         && ln -s ~/buildbot/master.cfg ~/buildbot-py3/master.cfg
 
-# The COPYs are done as root, but switch to root for the RUN after.
-USER    root
+COPY    buildbot /home/buildbot/buildbot/
 COPY    buildbot/buildbot.tac /home/buildbot/buildbot-py2/buildbot.tac
 COPY    buildbot/buildbot.tac /home/buildbot/buildbot-py3/buildbot.tac
 
-# Do the Python 2 workers first.
-COPY    buildbot/worker.tac /home/buildbot/worker/py2-add/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-clean/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-clobber/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-copy/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-fresh/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py2-incremental/buildbot.tac
+RUN     for pyver in py2 py3; do \
+            for worker in add full-clean full-clobber full-copy full-fresh incremental; do \
+                mkdir -p ~/worker/$pyver-$worker \
+                && ln -s ~/buildbot/worker.tac ~/worker/$pyver-$worker/buildbot.tac; \
+            done; \
+        done
 
-# Python 3 workers second.
-COPY    buildbot/worker.tac /home/buildbot/worker/py3-add/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-clean/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-clobber/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-copy/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py3-full-fresh/buildbot.tac
-COPY    buildbot/worker.tac /home/buildbot/worker/py3-incremental/buildbot.tac
-
-COPY    buildbot/master.cfg /home/buildbot/buildbot/master.cfg
+USER    root
 
 RUN     chown -R buildbot:buildbot ~buildbot/buildbot ~buildbot/worker
 
