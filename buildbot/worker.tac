@@ -15,7 +15,7 @@ rotateLength = 10000000
 maxRotatedFiles = 1
 
 basename = os.path.split(basedir)[1]
-name = 'source-' + basename[4-]
+name = 'source-' + basename[4:]
 
 # note: this line is matched against to check that this is a worker
 # directory; do not edit it.
