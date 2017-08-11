@@ -46,8 +46,21 @@ RUN     apt-get update \
                 helix-cli \
             && rm -rf /var/lib/apt/lists/*
 
-RUN     useradd -m buildbot
+COPY    service /var/lib/service
 
+RUN     mkdir -p /service/buildbot-py2 /service/buildbot-py3 \
+        && ln -s /var/lib/service/buildbot/run /service/buildbot-py2/run \
+        && ln -s /var/lib/service/buildbot/run /service/buildbot-py3/run
+
+RUN     for pyver in py2 py3; do \
+            for worker in add full-clean full-clobber full-copy full-fresh incremental; do \
+                mkdir -p /service/worker-$pyver-$worker \
+                && ln -s /var/lib/service/worker/run /service/worker-$pyver-$worker/run; \
+            done; \
+        done
+
+
+RUN     useradd -m buildbot
 
 USER    buildbot
 
@@ -77,19 +90,6 @@ RUN     for pyver in py2 py3; do \
 USER    root
 
 RUN     chown -R buildbot:buildbot ~buildbot/buildbot ~buildbot/worker
-
-COPY    service /var/lib/service
-
-RUN     mkdir -p /service/buildbot-py2 /service/buildbot-py3 \
-        && ln -s /var/lib/service/buildbot/run /service/buildbot-py2/run \
-        && ln -s /var/lib/service/buildbot/run /service/buildbot-py3/run
-
-RUN     for pyver in py2 py3; do \
-            for worker in add full-clean full-clobber full-copy full-fresh incremental; do \
-                mkdir -p /service/worker-$pyver-$worker \
-                && ln -s /var/lib/service/worker/run /service/worker-$pyver-$worker/run; \
-            done; \
-        done
 
 ENV     PY2_WWW_PORT=8010 PY2_PB_PORT=9989
 ENV     PY3_WWW_PORT=8011 PY3_PB_PORT=9990
