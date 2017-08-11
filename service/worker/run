@@ -7,4 +7,4 @@ venv=/home/buildbot/venv/$py
 basedir=/home/buildbot/worker/$name
 
 cd "$basedir"
-exec chpst -u buildbot $venv/bin/buildbot-worker start
+exec chpst -u buildbot $venv/bin/buildbot-worker start --nodaemon
