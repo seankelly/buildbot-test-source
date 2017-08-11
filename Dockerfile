@@ -65,6 +65,9 @@ RUN     ln -s ~/buildbot/master.cfg ~/buildbot-py2/master.cfg \
 
 # The COPYs are done as root, but switch to root for the RUN after.
 USER    root
+COPY    buildbot/buildbot.tac /home/buildbot/buildbot-py2/buildbot.tac
+COPY    buildbot/buildbot.tac /home/buildbot/buildbot-py3/buildbot.tac
+
 # Do the Python 2 workers first.
 COPY    buildbot/worker.tac /home/buildbot/worker/py2-add/buildbot.tac
 COPY    buildbot/worker.tac /home/buildbot/worker/py2-full-clean/buildbot.tac
