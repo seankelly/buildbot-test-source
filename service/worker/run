@@ -4,7 +4,7 @@ cwd=$(pwd)
 name=$(basename "$cwd" | cut -d- -f 2-)
 py=$(echo "$name" | cut -d- -f2)
 venv=/home/buildbot/venv/$py
-basedir=/home/buildbot/$name
+basedir=/home/buildbot/worker/$name
 
 cd "$basedir"
 exec chpst -u buildbot $venv/bin/buildbot-worker start
