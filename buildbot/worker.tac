@@ -4,6 +4,7 @@ import six
 
 from buildbot_worker.bot import Worker
 from twisted.application import service
+from twisted.python.log import ILogObserver, FileLogObserver
 
 if six.PY2:
     PB_PORT = os.environ['PY2_PB_PORT']
@@ -20,13 +21,7 @@ name = 'source-' + basename[4-]
 # note: this line is matched against to check that this is a worker
 # directory; do not edit it.
 application = service.Application('buildbot-worker')
-
-from twisted.python.logfile import LogFile
-from twisted.python.log import ILogObserver, FileLogObserver
-logfile = LogFile.fromFullPath(
-    os.path.join(basedir, "twistd.log"), rotateLength=rotateLength,
-    maxRotatedFiles=maxRotatedFiles)
-application.setComponent(ILogObserver, FileLogObserver(logfile).emit)
+application.setComponent(ILogObserver, FileLogObserver(sys.stdout).emit)
 
 buildmaster_host = '127.0.0.1'
 port = PB_PORT
