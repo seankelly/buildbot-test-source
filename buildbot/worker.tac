@@ -6,9 +6,9 @@ from buildbot_worker.bot import Worker
 from twisted.application import service
 
 if six.PY2:
-    PB_PORT = os.environ['PY2_PB_PORT']
+    PB_PORT = int(os.environ['PY2_PB_PORT'])
 elif six.PY3:
-    PB_PORT = os.environ['PY3_PB_PORT']
+    PB_PORT = int(os.environ['PY3_PB_PORT'])
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 rotateLength = 10000000
