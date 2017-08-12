@@ -46,6 +46,9 @@ RUN     apt-get update \
                 helix-cli \
             && rm -rf /var/lib/apt/lists/*
 
+# Configure Perforce server.
+RUN    /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -u super -P SuperSuper
+
 COPY    service /var/lib/service
 
 RUN     mkdir -p /service/buildbot-py2 /service/buildbot-py3 \
