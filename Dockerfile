@@ -38,7 +38,7 @@ RUN     apt-get update \
 
 RUN     curl https://package.perforce.com/perforce.pubkey | apt-key add -
 
-COPY    perforce.list /etc/apt/sources.list.d/perforce.list
+COPY    apt/perforce.list /etc/apt/sources.list.d/perforce.list
 
 RUN     apt-get update \
             && apt-get install -y \
