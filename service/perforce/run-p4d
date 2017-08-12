@@ -1,5 +1,5 @@
 #!/bin/sh
 
 # This is the default location for the server.
-cd /opt/perforce/servers/master
+cd /srv/perforce/master
 exec chpst -u perforce p4d

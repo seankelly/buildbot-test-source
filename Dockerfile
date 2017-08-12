@@ -47,7 +47,7 @@ RUN     apt-get update \
             && rm -rf /var/lib/apt/lists/*
 
 # Configure Perforce server.
-RUN    /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -u super -P SuperSuper
+RUN     /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -r /srv/perforce/master -u super -P SuperSuper
 
 COPY    service /var/lib/service
 
