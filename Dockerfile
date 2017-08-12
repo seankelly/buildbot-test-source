@@ -62,6 +62,10 @@ RUN     for pyver in py2 py3; do \
             done; \
         done
 
+# Start Perforce automatically.
+RUN     mkdir /service/p4d \
+        && ln -s /var/lib/service/perforce/run-p4d /service/p4d/run
+
 
 RUN     useradd -m buildbot
 
