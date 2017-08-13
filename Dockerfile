@@ -60,9 +60,9 @@ RUN     useradd -d /srv/svn -m svn
 
 USER    svn
 RUN     svnadmin create /srv/svn/repos
-RUN     chown -R svn:svn /srv/svn
 
 USER    root
+RUN     chown -R svn:svn /srv/svn
 
 RUN     mkdir /service/svn \
         && ln -s /var/lib/service/subversion/run /service/svn/run
