@@ -60,6 +60,7 @@ RUN     virtualenv -p python2.7 --system-site-packages ~/venv/py2 \
 RUN     ~/venv/py2/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker \
         && ~/venv/py3/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker
 
+USER    root
 # Configure Perforce server.
 RUN     /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -r /srv/perforce/master -u super -P SuperSuper
 
