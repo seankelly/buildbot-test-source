@@ -53,6 +53,18 @@ RUN     /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -r /srv/perf
 RUN     mkdir /service/p4d \
         && ln -s /var/lib/service/perforce/run-p4d /service/p4d/run
 
+# Configure subversion server
+RUN     useradd -d /srv/svn -m svn
+
+USER    svn
+RUN     svnadmin create /srv/svn
+RUN     chown -R svn:svn /srv/svn
+
+USER    root
+
+RUN     mkdir /service/svn \
+        && ln -s /var/lib/service/subversion/run /service/svn/run
+
 COPY    service /var/lib/service
 
 RUN     mkdir -p /service/buildbot-py2 /service/buildbot-py3 \

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec chpst -u svn svnserve --daemon --foreground -r /srv/svn
