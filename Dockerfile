@@ -49,6 +49,10 @@ RUN     apt-get update \
 # Configure Perforce server.
 RUN     /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -r /srv/perforce/master -u super -P SuperSuper
 
+# Start Perforce automatically.
+RUN     mkdir /service/p4d \
+        && ln -s /var/lib/service/perforce/run-p4d /service/p4d/run
+
 COPY    service /var/lib/service
 
 RUN     mkdir -p /service/buildbot-py2 /service/buildbot-py3 \
@@ -61,10 +65,6 @@ RUN     for pyver in py2 py3; do \
                 && ln -s /var/lib/service/worker/run /service/worker-$pyver-$worker/run; \
             done; \
         done
-
-# Start Perforce automatically.
-RUN     mkdir /service/p4d \
-        && ln -s /var/lib/service/perforce/run-p4d /service/p4d/run
 
 
 RUN     useradd -m buildbot
