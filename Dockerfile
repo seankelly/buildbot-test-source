@@ -96,7 +96,7 @@ USER    buildbot
 RUN     mkdir ~/buildbot-py2 ~/buildbot-py3 \
         && ln -s ~/buildbot/master.cfg ~/buildbot-py2/master.cfg \
         && ln -s ~/buildbot/master.cfg ~/buildbot-py3/master.cfg \
-        && ln -s ~/buildbot/buildbot.tac ~/buildbot-py3/buildbot.tac \
+        && ln -s ~/buildbot/buildbot.tac ~/buildbot-py2/buildbot.tac \
         && ln -s ~/buildbot/buildbot.tac ~/buildbot-py3/buildbot.tac
 
 RUN     for pyver in py2 py3; do \
