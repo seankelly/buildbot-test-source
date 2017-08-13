@@ -91,15 +91,11 @@ RUN     for pyver in py2 py3; do \
         done
 
 USER    buildbot
-RUN     ~/venv/py2/bin/buildbot create-master ~/buildbot-py2 \
-        && ~/venv/py3/bin/buildbot create-master ~/buildbot-py3
 
 RUN     ln -s ~/buildbot/master.cfg ~/buildbot-py2/master.cfg \
-        && ln -s ~/buildbot/master.cfg ~/buildbot-py3/master.cfg
-
-COPY    buildbot /home/buildbot/buildbot/
-COPY    buildbot/buildbot.tac /home/buildbot/buildbot-py2/buildbot.tac
-COPY    buildbot/buildbot.tac /home/buildbot/buildbot-py3/buildbot.tac
+        && ln -s ~/buildbot/master.cfg ~/buildbot-py3/master.cfg \
+        && ln -s ~/buildbot/buildbot.tac ~/buildbot-py3/buildbot.tac \
+        && ln -s ~/buildbot/buildbot.tac ~/buildbot-py3/buildbot.tac
 
 RUN     for pyver in py2 py3; do \
             for worker in add full-clean full-clobber full-copy full-fresh incremental; do \
@@ -110,6 +106,7 @@ RUN     for pyver in py2 py3; do \
 
 USER    root
 
+COPY    buildbot /home/buildbot/buildbot/
 RUN     chown -R buildbot:buildbot ~buildbot/buildbot ~buildbot/worker
 
 ENV     PY2_WWW_PORT=8010 PY2_PB_PORT=9989

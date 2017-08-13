@@ -7,4 +7,5 @@ venv=/home/buildbot/venv/$py
 basedir=/home/buildbot/$name
 
 cd "$basedir"
+chpst -u buildbot $venv/bin/buildbot upgrade-master
 exec chpst -u buildbot $venv/bin/buildbot start --nodaemon
