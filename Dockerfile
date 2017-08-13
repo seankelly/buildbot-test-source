@@ -46,6 +46,8 @@ RUN     apt-get update \
                 helix-cli \
             && rm -rf /var/lib/apt/lists/*
 
+RUN     mkdir /service
+
 # Configure Perforce server.
 RUN     /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -r /srv/perforce/master -u super -P SuperSuper
 
