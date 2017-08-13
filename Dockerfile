@@ -59,7 +59,7 @@ RUN     mkdir /service/p4d \
 RUN     useradd -d /srv/svn -m svn
 
 USER    svn
-RUN     svnadmin create /srv/svn
+RUN     svnadmin create /srv/svn/repos
 RUN     chown -R svn:svn /srv/svn
 
 USER    root
