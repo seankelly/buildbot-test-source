@@ -48,6 +48,18 @@ RUN     apt-get update \
 
 RUN     mkdir /service
 
+# Create extra users
+RUN     useradd -m buildbot \
+        && useradd -d /srv/svn -m svn
+
+USER    buildbot
+
+RUN     virtualenv -p python2.7 --system-site-packages ~/venv/py2 \
+        && virtualenv -p python3.5 --system-site-packages ~/venv/py3
+
+RUN     ~/venv/py2/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker \
+        && ~/venv/py3/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker
+
 # Configure Perforce server.
 RUN     /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -r /srv/perforce/master -u super -P SuperSuper
 
@@ -56,8 +68,6 @@ RUN     mkdir /service/p4d \
         && ln -s /var/lib/service/perforce/run-p4d /service/p4d/run
 
 # Configure subversion server
-RUN     useradd -d /srv/svn -m svn
-
 USER    svn
 RUN     svnadmin create /srv/svn/repos
 
@@ -80,17 +90,7 @@ RUN     for pyver in py2 py3; do \
             done; \
         done
 
-
-RUN     useradd -m buildbot
-
 USER    buildbot
-
-RUN     virtualenv -p python2.7 --system-site-packages ~/venv/py2 \
-        && virtualenv -p python3.5 --system-site-packages ~/venv/py3
-
-RUN     ~/venv/py2/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker \
-        && ~/venv/py3/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker
-
 RUN     ~/venv/py2/bin/buildbot create-master ~/buildbot-py2 \
         && ~/venv/py3/bin/buildbot create-master ~/buildbot-py3
 
