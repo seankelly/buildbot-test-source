@@ -61,8 +61,14 @@ RUN     ~/venv/py2/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbo
         && ~/venv/py3/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker
 
 USER    root
-# Configure Perforce server.
-RUN     /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -r /srv/perforce/master -u super -P SuperSuper
+# Configure Perforce server. Set the security level to 0 to allow logging in
+# via passwords used at the command line. Then create the test depot.
+COPY    perforce /root/perforce
+RUN     /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -r /srv/perforce/master -u super -P SuperSuper \
+        && echo 'SuperSuper' | p4 login \
+        && p4 configure set security=0 \
+        && p4 depot -i < /root/perforce/test-depot \
+        && p4dctl stop -a
 
 # Start Perforce automatically.
 RUN     mkdir /service/p4d \

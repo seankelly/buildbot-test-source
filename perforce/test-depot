@@ -1,0 +1,11 @@
+# Create test depot.
+Depot:	test
+
+Owner:	super
+
+Description:
+	Test depot.
+
+Type:	local
+
+Map:	test/...
