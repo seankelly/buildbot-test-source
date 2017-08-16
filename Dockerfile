@@ -68,6 +68,12 @@ RUN     /opt/perforce/sbin/configure-helix-p4d.sh master -n -p 1666 -r /srv/perf
         && echo 'SuperSuper' | p4 login \
         && p4 configure set security=0 \
         && p4 depot -i < /root/perforce/test-depot \
+        && p4 client -i < /root/perforce/client \
+        && mkdir -p /root/work/test \
+        && cd /root/work/test \
+        && echo 00 > 00 \
+        && P4CLIENT=buildbot_test p4 add 00 \
+        && P4CLIENT=buildbot_test p4 submit -i < /root/perforce/submit \
         && p4dctl stop -a
 
 # Start Perforce automatically.
