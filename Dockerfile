@@ -120,6 +120,8 @@ RUN     for pyver in py2 py3; do \
 
 USER    root
 
+COPY    change /usr/local
+
 COPY    buildbot /home/buildbot/buildbot/
 RUN     chown -R buildbot:buildbot ~buildbot/buildbot ~buildbot/worker
 
