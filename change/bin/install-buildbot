@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -eu
+
+usage() {
+    echo "$0 repository [branch]"
+    echo "  Will install the Buildbot from the repository and optional branch"
+    echo "  in the Python 2 and 3 environments. DOES NOT RESTART ANYTHING."
+    exit 0
+}
+
+main() {
+    if (( $# == 0 )); then
+        usage
+    fi
+
+    repository=$1
+    branch=$2
+
+    pip_branch=""
+    if [[ -n $branch ]]; then
+        pip_branch="@${branch}"
+    fi
+
+    url="${repository}${pip_branch}"
+    master_url="${url}#egg=buildbot&subdirectory=master"
+    worker_url="${url}#egg=buildbot_worker&subdirectory=worker"
+
+    echo "Installing $url for Python 2 master"
+    ~buildbot/venv/py2/bin/pip install -e "$master_url"
+    echo "Installing $url for Python 2 worker"
+    ~buildbot/venv/py2/bin/pip install -e "$worker_url"
+
+    echo "Installing $url for Python 3 master"
+    ~buildbot/venv/py3/bin/pip install -e "$master_url"
+    echo "Installing $url for Python 3 worker"
+    ~buildbot/venv/py3/bin/pip install -e "$worker_url"
+}
+
+main "$@"
