@@ -3,6 +3,7 @@ FROM    debian:9
 # Install everything plus dependencies in order to install Perforce.
 RUN     apt-get update \
             && apt-get install -y \
+                build-essential \
                 bzr \
                 curl \
                 cvs \
