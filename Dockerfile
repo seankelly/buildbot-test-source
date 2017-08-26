@@ -61,6 +61,8 @@ RUN     virtualenv -p python2.7 --system-site-packages ~/venv/py2 \
 RUN     ~/venv/py2/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker \
         && ~/venv/py3/bin/pip install 'buildbot[bundle]' buildbot-grid-view buildbot-worker
 
+COPY    dotfiles/ /home/buildbot/
+
 USER    root
 # Configure Perforce server. Set the security level to 0 to allow logging in
 # via passwords used at the command line. Then create the test depot.
