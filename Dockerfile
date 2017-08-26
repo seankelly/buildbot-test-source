@@ -99,7 +99,10 @@ RUN     mkdir /srv/hg && \
 
 USER    buildbot
 
-RUN     cd /srv/git && git init -q
+RUN     cd /srv/git && git init -q && \
+        echo 00 > 00 && \
+        git add . && \
+        git commit -m 'Initial commit' -a
 RUN     cd /srv/hg && hg init
 
 USER    root
