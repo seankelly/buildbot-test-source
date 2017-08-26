@@ -88,6 +88,20 @@ RUN     svnadmin create /srv/svn/repos
 USER    root
 RUN     chown -R svn:svn /srv/svn
 
+# Configure git and hg repositories.
+RUN     mkdir /srv/git && \
+        chown buildbot:buildbot /srv/git
+
+RUN     mkdir /srv/hg && \
+        chown buildbot:buildbot /srv/hg
+
+USER    buildbot
+
+RUN     cd /srv/git && git init -q
+RUN     cd /srv/hg && hg init
+
+USER    root
+
 RUN     mkdir /service/svn \
         && ln -s /var/lib/service/subversion/run /service/svn/run
 
