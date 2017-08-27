@@ -104,6 +104,7 @@ RUN     cd /srv/git && git init --bare -q && \
         echo 00 > 00 && \
         git add . && \
         git commit -m 'Initial commit' -a && \
+        git push origin master:master && \
         cd / && rm -rf /tmp/git
 RUN     cd /srv/hg && hg init && \
         echo 00 > 00 && \
