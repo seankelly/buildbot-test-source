@@ -105,7 +105,9 @@ RUN     cd /srv/git && git init --bare -q && \
         git add . && \
         git commit -m 'Initial commit' -a && \
         cd / && rm -rf /tmp/git
-RUN     cd /srv/hg && hg init
+RUN     cd /srv/hg && hg init && \
+        echo 00 > 00 && \
+        hg commit -A -m 'Initial commit'
 
 USER    root
 
